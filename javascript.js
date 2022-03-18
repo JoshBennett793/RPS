@@ -1,16 +1,25 @@
-/* make a function with the name computerPlay
-    have computerPlay return a random either of the 3:
-    use console.log to make sure return value is one of
-    the three choices */
-
+// random choice function
 function computerPlay () {
-    const compChoices = ['Rock', 'Paper', 'Scissors']
+    const compChoices = ['rock', 'paper', 'scissors'];
     let randCompChoice = compChoices[Math.floor(Math.random() * compChoices.length)];
-    return randCompChoice
+    randCompChoice = randCompChoice.charAt(0).toUpperCase() + randCompChoice.slice(1);
+    return randCompChoice;
 }
-console.log(computerPlay())
-/* write a function that will take two parameters
-    named playerSelection and computerSelection
-    have function return a string that declares the winner 
-    Make functions playerSelector parameter case-insensitive */
 
+//single round function
+function playRound (playerSelection, computerSelection) {
+
+    if (playerSelection == 'rock' && computerSelection == 'Paper') {
+        return 'Oh no, you lost! Paper covers rock!';
+    }   else if (playerSelection == 'rock' && computerSelection == 'Rock') {
+        return 'It\'s a tie. Go again!';
+    }   else if (playerSelection == 'rock' && computerSelection == 'Scissors') { 
+        return 'You win! Rock crushes scissors!';
+    }   else {
+        return 'Enter a choice!';
+    }
+}
+
+const playerSelection = prompt('What will you choose?','').toLowerCase();
+const computerSelection = computerPlay();
+console.log(playRound(playerSelection, computerSelection));
