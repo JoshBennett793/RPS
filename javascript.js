@@ -16,26 +16,22 @@ let computerScore = 0;
 
 //single round function
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection == 'rock' && computerSelection == 'rock') {
-            return 'It\'s a tie.';
-        }   else if (playerSelection == 'rock' && computerSelection == 'paper') {
-                return 'You lose!';
-        }   else if (playerSelection == 'rock' && computerSelection == 'scissors') {
-                return 'You win!';
-        }   else if (playerSelection == 'paper' && computerSelection == 'rock') {
-                return 'You win!';
-        }   else if (playerSelection == 'paper' && computerSelection == 'paper') {
+    if ((playerSelection !== 'rock') && (playerSelection !== 'paper') && (playerSelection !== 'scissors')) {
+        return 'You made an invalid choice. Please choose either Rock, Paper, or Scissors.';
+        }    else if (playerSelection ===  computerSelection) {
                 return 'It\'s a tie.';
-        }   else if (playerSelection == 'paper' && computerSelection == 'scissors') {
+        }   else if (playerSelection === 'rock' && computerSelection === 'paper') {
                 return 'You lose!';
-        }   else if (playerSelection == 'scissors' && computerSelection == 'rock') {
-                return 'You lose!';
-        }   else if (playerSelection == 'scissors' && computerSelection == 'paper') {
+        }   else if (playerSelection === 'rock' && computerSelection === 'scissors') {
                 return 'You win!';
-        }   else if (playerSelection == 'scissors' && computerSelection == 'scissors') {
-                return 'It\'s a tie!';
-        }   else {
-                return 'Please enter a valid choice. Rock, paper, or scissors.';
+        }   else if (playerSelection === 'paper' && computerSelection === 'rock') {
+                return 'You win!';
+        }   else if (playerSelection === 'paper' && computerSelection === 'scissors') {
+                return 'You lose!';
+        }   else if (playerSelection === 'scissors' && computerSelection === 'rock') {
+                return 'You lose!';
+        }   else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+                return 'You win!';
         }
     } // playRound()
 
