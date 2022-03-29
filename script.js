@@ -55,7 +55,7 @@ function game() {
                     console.log('You lose this round!')
             }   else if (result == 'tie') {
                     console.log('This round ended in a tie! No points awarded.')
-            }	else if {
+            }	else {
 					console.log('Invalid choice. Please choose either rock, paper, or scissors.')
 					i--;
 			}
@@ -66,8 +66,11 @@ function game() {
 function displayWinner() {
     if (playerScore > computerScore) {
         return 'You beat the computer!';
-    }   else if (computerScore > playerScore) 
-          return 'You lost to the computer!'
+    }   else if (computerScore > playerScore) {
+            return 'You lost to the computer!';
+    }   else if (playerScore === computerScore) {
+            return 'It\'s a tie!'
+    }
 }
 
 console.log(game());
