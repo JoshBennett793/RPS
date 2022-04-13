@@ -1,0 +1,76 @@
+body {
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: American Typewriter, serif;
+	font-style: oblique;
+	font-variant: small-caps;
+	font-size: 32px;
+	background-color: rgb(185, 217, 246);
+}
+
+.start-popup {
+	background-color: rgb(154, 191, 224);
+	height: 30%;
+	width: 60%;
+	padding: 60px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 25px;
+	gap: 15px;
+	border-bottom: 25px solid rgb(99, 148, 185);
+}
+
+.container-buttons {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	gap: 60px;
+
+}
+
+.btn-red {
+	background-color:rgb(204, 143, 112);
+	border-radius: 12px;
+	border: none;
+	box-shadow: 4px 4px rgb(162, 98, 43);
+	padding: 12px;
+	font-size: 32px;
+	cursor: pointer;
+}
+
+.btn-green {
+	background-color: rgb(104, 201, 104);
+	border-radius: 12px;
+	border: none;
+	box-shadow: 4px 4px rgb(65, 156, 56);
+	padding: 12px;
+	font-size: 32px;
+	cursor: pointer;
+}
+
+.rules-popup {
+	background-color: rgb(154, 191, 224);
+	height: 30%;
+	width: 60%;
+	padding: 60px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: space-evenly;
+	border-radius: 25px;
+	border-bottom: 25px solid rgb(99, 148, 185);
+}
+
+.container-game {
+	
+}
