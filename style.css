@@ -34,7 +34,6 @@ body {
 	align-items: center;
 	padding: 15px;
 	gap: 60px;
-
 }
 
 .btn-red {
@@ -59,6 +58,7 @@ body {
 
 .rules-popup {
 	background-color: rgb(154, 191, 224);
+	font-size: 24px;
 	height: 30%;
 	width: 60%;
 	padding: 60px;
@@ -71,6 +71,71 @@ body {
 	border-bottom: 25px solid rgb(99, 148, 185);
 }
 
-.container-game {
-	
+.game-container {
+	background-color: rgb(154, 191, 224);
+	height: 75%;
+	width: 75%;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 25px;
+	gap: 15px;
+	border-bottom: 25px solid rgb(99, 148, 185);
+	border-top: 25px solid rgb(99, 148, 185);
+}
+
+.weapons-container .button {
+	background-color: rgb(113, 193, 217);
+	width: 20%;
+	border-radius: 12px;
+	border: none;
+	box-shadow: 4px 4px rgb(37, 103, 130);
+	padding: 12px;
+	font-size: 32px;
+	cursor: pointer;
+}
+
+.weapons-container {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	margin-top: auto;
+}
+
+.score-container {
+	width: 80%;
+	margin-top: auto;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.computer {
+	display: flex;
+	flex-direction: column-reverse;
+	margin-left: auto;
+}
+
+.player {
+	display: flex;
+	flex-direction: column-reverse;
+	margin-right: auto;
+}
+
+.round-container {
+	width: 100%;
+	display: flex;
+}
+
+.current-round {
+	flex: 50% 2 auto;
+	padding-left: 10px;
+}
+
+.computer-icon {
+	display: flex;
+	flex: 3 1 auto;
+ 	justify-content: flex-start;
+	 padding-left: 50px;
 }

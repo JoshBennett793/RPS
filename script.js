@@ -38,6 +38,9 @@ function showRules() {
 	const containerShowRules = createDivElement('rules-popup', '');
 	containerShowRules.appendChild(createDivElement('', 'Select Rock, Paper, or Scissors.'));
 	containerShowRules.appendChild(createDivElement('', 'Best 2 out of 3 rounds wins the game.'));
+	containerShowRules.appendChild(createDivElement('', 'Rock > Scissors'));
+	containerShowRules.appendChild(createDivElement('', 'Paper > Rock'));
+	containerShowRules.appendChild(createDivElement('', 'Scissors > Paper'));
 
 	const buttonContainer = createDivElement('container-buttons', '');
 	buttonContainer.appendChild(createDivElement('button btn-green', 'Play'));
@@ -56,28 +59,38 @@ function startGame() {
 	
 	const containerGame = createDivElement('game-container', '');
 	
-	const containerRoundDisplay = createDivElement('round-display', '');
-	containerRoundDisplay.appendChild(createDivElement('', 'Round: 1'));
+	const playerIcon = createDivElement('player-icon', 'PLAYER');
 
-
-	const containerComputerScore = createDivElement('computer', 'Computer');
-	containerComputerScore.appendChild(createDivElement('comp-score', '0'));
+	const containerRoundDisplay = createDivElement('round-container', '');
+	containerRoundDisplay.appendChild(createDivElement('current-round', 'Round: 1'));
+	containerRoundDisplay.appendChild(createDivElement('computer-icon', 'COMPUTER'));
 
 	const containerPlayerScore = createDivElement('player', 'Player');
 	containerPlayerScore.appendChild(createDivElement('play-score', '0'));
 	
-	const containerWeapons = createDivElement('weapons-buttons', '');
+	const containerComputerScore = createDivElement('computer', 'Computer');
+	containerComputerScore.appendChild(createDivElement('comp-score', '0'));
+	
+	const containerScore = createDivElement('score-container', '');
+	containerScore.appendChild(containerPlayerScore);
+	containerScore.appendChild(containerComputerScore);
+	
+	const containerWeapons = createDivElement('weapons-container', '');
 	containerWeapons.appendChild(createDivElement('button btn-rock', 'Rock'));
 	containerWeapons.appendChild(createDivElement('button btn-paper' , 'Paper'));
 	containerWeapons.appendChild(createDivElement('button btn-scissors', 'Scissors'));
 
-	const messageDisplay = createDivElement('message-bar', '')
-	messageDisplay.appendChild(createDivElement('message', ));
+	const messageDisplay = createDivElement('message-bar', '');
+	messageDisplay.appendChild(createDivElement('message', ''));
+
+	const computerWeaponChoice = createDivElement('computer-weapon-container', '');
 
 	containerGame.appendChild(containerRoundDisplay);
-	containerGame.appendChild(containerComputerScore);
-	containerGame.appendChild(containerPlayerScore);
+	containerGame.appendChild(computerWeaponChoice);
+	containerGame.appendChild(containerScore);
+	containerGame.appendChild(messageDisplay);
 	containerGame.appendChild(containerWeapons);
+	containerGame.appendChild(playerIcon)
 	document.body.appendChild(containerGame);
 
 	const rockBtn = document.querySelector('.btn-rock');
