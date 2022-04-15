@@ -60,10 +60,10 @@ function startGame() {
 	const containerGame = createDivElement('game-container', '');
 	
 	const playerIcon = createDivElement('player-icon', 'PLAYER');
+	const computerIcon = createDivElement('computer-icon', 'COMPUTER');
 
 	const containerRoundDisplay = createDivElement('round-container', '');
 	containerRoundDisplay.appendChild(createDivElement('current-round', 'Round: 1'));
-	containerRoundDisplay.appendChild(createDivElement('computer-icon', 'COMPUTER'));
 
 	const containerPlayerScore = createDivElement('player', 'Player');
 	containerPlayerScore.appendChild(createDivElement('play-score', '0'));
@@ -83,35 +83,47 @@ function startGame() {
 	const messageDisplay = createDivElement('message-bar', '');
 	messageDisplay.appendChild(createDivElement('message', ''));
 
-	const computerWeaponChoice = createDivElement('computer-weapon-container', '');
+	const computerWeaponChoice = createDivElement('computer-weapons-container', '');
+	computerWeaponChoice.appendChild(createDivElement('comp-button comp-btn-rock', 'Rock'));
+	computerWeaponChoice.appendChild(createDivElement('comp-button comp-btn-paper' , 'Paper'));
+	computerWeaponChoice.appendChild(createDivElement('comp-button comp-btn-scissors', 'Scissors'));
 
-	containerGame.appendChild(containerRoundDisplay);
+	containerGame.appendChild(computerIcon);
 	containerGame.appendChild(computerWeaponChoice);
 	containerGame.appendChild(containerScore);
 	containerGame.appendChild(messageDisplay);
 	containerGame.appendChild(containerWeapons);
 	containerGame.appendChild(playerIcon)
+	document.body.appendChild(containerRoundDisplay);
 	document.body.appendChild(containerGame);
 
 	const rockBtn = document.querySelector('.btn-rock');
-	rockBtn.addEventListener('click', () => {
-		containerGame.removeChild(containerWeapons);
-		containerGame.appendChild(createDivElement('chosen-weapon', 'Rock'));
-		playRound('rock', );
-	});
-
 	const paperBtn = document.querySelector('.btn-paper');
-	paperBtn.addEventListener('click', () => {
-		containerGame.removeChild(containerWeapons);
-		containerGame.appendChild(createDivElement('chosen-weapon', 'Paper'));
-		playRound('paper', );
+	const scissorsBtn = document.querySelector('.btn-scissors');
+
+	rockBtn.addEventListener('click', () => {
+		//change name of class to one with 'highlight' styling
+		//will need to have a function that tests for the id name of selected
+		//and removes it if so. maybe use toggle?
+		rockBtn.classList.toggle('selected');
+		rockBtn.classList.toggle('button');
+		playRound('rock', );
+		const resetButton = createDivElement('reset-button', 'RESET');
+		document.body.insertBefore(resetButton, containerGame.nextSibling);
 	});
 
-	const scissorsBtn = document.querySelector('.btn-scissors');
+	paperBtn.addEventListener('click', () => {
+		paperBtn.classList.toggle('selected');
+		playRound('paper', );
+		const resetButton = createDivElement('reset-button', 'RESET');
+		document.body.insertBefore(resetButton, containerGame.nextSibling);
+	});
+
 	scissorsBtn.addEventListener('click', () => {
-		containerGame.removeChild(containerWeapons);
-		containerGame.appendChild(createDivElement('chosen-weapon', 'Scissors'));
+		scissorsBtn.classList.toggle('selected');
 		playRound('scissors', );
+		const resetButton = createDivElement('reset-button', 'RESET');
+		document.body.insertBefore(resetButton, containerGame.nextSibling);
 	});
 } // startGame()
 
@@ -121,18 +133,26 @@ function updateComputerScore(computerScore) {
 }
 
 function updatePlayerScore(playerScore) {
+
 	document.getElementsByClassName('.play-score').replaceWith(createDivElement('play-score', `${playerScore}`));
+}
+
+// highlights computer selection
+function displayComputerChoice(computerSelection) {
+/* change class name of selected button and change the styling for
+new class name */
+
 }
 
 // resets weapon selection buttons and starts a new round
 function startNewRound() {
 }
-
-//displays computer's choice in similar button design
-function displayComputerChoice(computerSelection) {
-	document.containerGame.createDivElement('computer-choice-display', `${computerSelection}`);
-}
-
+/* from event listener onclick, it removes other buttons, plays a round
+with corresponding weapon choice, then creates a new div that say 'reset'
+and assigned a class. That class name then has an event listener added in 
+startNewRound() to update the round and score count then perform the reset 
+of weapons choices back on the screen, deletion of computer choice, and 
+reinitiates a new round. */
 //GAME LOGIC
 
 // Computer random choice function
@@ -144,6 +164,7 @@ function computerPlay() {
 
 let playerScore = 0;
 let computerScore = 0;
+let roundCount = 1;
 
 //single round function
 function playRound(playerSelection, computerSelection) {
@@ -172,29 +193,22 @@ function playRound(playerSelection, computerSelection) {
 } // playRound()
 
 // 5 round game function
-/*function game() {
+function game() {
+		for (let i = 1; i <= 3; i++) {
   	computerSelection = computerPlay();
 	  let result = playRound(playerSelection, computerSelection);
   	  if (result == 'win') {
 	  	  playerScore++;
-  	  	console.log('Player: ' + playerScore)
-	    	console.log('Computer: ' + computerScore)
-  	  	console.log('Computer chose: ' + computerSelection)
-    		console.log('You win this round!')
 	}   else if (result == 'lose') {
   	    computerScore++;
-    	  console.log('Player: ' + playerScore)
-      	console.log('Computer: ' + computerScore)
-	      console.log('Computer chose: ' + computerSelection)
-  	    console.log('You lose this round!')
+				updateComputerScore(computerScore)
 	} 	else if (result == 'tie') {
-      	console.log('This round ended in a tie! No points awarded.')
 	}		else {
-				console.log('Invalid choice. Please choose either rock, paper, or scissors.')
+				('Invalid choice. Please choose either rock, paper, or scissors.')
 					i--;
 	}
 } // for loop
-//} // game()*/
+} // game()
 
 // Winner announcement function
 function displayWinner() {
