@@ -28,6 +28,21 @@ body {
 	border-bottom: 25px solid rgb(99, 148, 185);
 }
 
+.rules-popup {
+	background-color: rgb(154, 191, 224);
+	font-size: 24px;
+	height: 30%;
+	width: 60%;
+	padding: 60px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: space-evenly;
+	border-radius: 25px;
+	border-bottom: 25px solid rgb(99, 148, 185);
+}
+
 .container-buttons {
 	width: 100%;
 	display: flex;
@@ -57,21 +72,6 @@ body {
 	cursor: pointer;
 }
 
-.rules-popup {
-	background-color: rgb(154, 191, 224);
-	font-size: 24px;
-	height: 30%;
-	width: 60%;
-	padding: 60px;
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	align-items: center;
-	justify-content: space-evenly;
-	border-radius: 25px;
-	border-bottom: 25px solid rgb(99, 148, 185);
-}
-
 .round-container {
 	display: flex;
 	justify-content: center;
@@ -79,6 +79,7 @@ body {
 
 .game-container {
 	background-color: rgb(154, 191, 224);
+	overflow: scroll;
 	height: 75%;
 	width: 75%;
 	display: flex;
@@ -99,7 +100,7 @@ body {
 	border: none;
 	box-shadow: 0 0 1rem rgb(37, 103, 130);
 	padding: 12px;
-	font-size: 32px;
+	font-size: 4vw;
 	cursor: pointer;
 }
 
@@ -110,7 +111,7 @@ body {
 	border: none;
 	box-shadow: 0 0 1rem rgb(37, 103, 130);
 	padding: 12px;
-	font-size: 32px;
+	font-size: 4vw;
 }
 
 .selected {
@@ -120,7 +121,17 @@ body {
 	border: none;
 	box-shadow: 0 0 1rem rgb(11, 60, 26);
 	padding: 12px;
-	font-size: 32px;
+	font-size: 4vw;
+}
+
+.comp-selected {
+	background-color: rgb(255, 80, 80);
+	width: 20%;
+	border-radius: 12px;
+	border: none;
+	box-shadow: 0 0 1rem rgb(208, 6, 6);
+	padding: 12px;
+	font-size: 4vw;
 }
 
 .weapons-container {

@@ -1,17 +1,15 @@
-function createDivElement(className, text, id = '') {
+function createDivElement(className, text) {
 	const div = document.createElement('div');
 	div.appendChild(document.createTextNode(text));
 	div.className = className;
-	div.id = id;
 	return div;
-}
+};
 
 function referToGithub() {
 	window.open('https://github.com/JoshBennett793/RPS')
-}
+};
 
-function wantToPlay() {
-	//build the UI for the game
+function wantToPlay() { // UI for start window
 	const containerWantToPlay = createDivElement('start-popup', '')
 	containerWantToPlay.appendChild(createDivElement('', 'Want to play Rock, Paper, Scissors?'));
 
@@ -25,19 +23,18 @@ function wantToPlay() {
 	const btnGreen = document.querySelector('.btn-green');
 	btnGreen.addEventListener('click', () => {
 		document.body.removeChild(containerWantToPlay);
-		return showRules();
+		showRules();
 	});
 	const btnRed = document.querySelector('.btn-red');
 	btnRed.addEventListener('click', () => {
-		return referToGithub();
+		referToGithub();
 	});
-}
+}; // wantToPlay()
 
-function showRules() {
-
+function showRules() { // UI for rules window
 	const containerShowRules = createDivElement('rules-popup', '');
 	containerShowRules.appendChild(createDivElement('', 'Select Rock, Paper, or Scissors.'));
-	containerShowRules.appendChild(createDivElement('', 'Best 2 out of 3 rounds wins the game.'));
+	containerShowRules.appendChild(createDivElement('', 'First one to 5 wins the game.'));
 	containerShowRules.appendChild(createDivElement('', 'Rock > Scissors'));
 	containerShowRules.appendChild(createDivElement('', 'Paper > Rock'));
 	containerShowRules.appendChild(createDivElement('', 'Scissors > Paper'));
@@ -51,12 +48,73 @@ function showRules() {
 	const btnPlay = document.querySelector('.btn-green');
 	btnPlay.addEventListener('click', () => {
 		document.body.removeChild(containerShowRules);
+
 		startGame();
 	});
-}
+}; // showRules()
 
-function startGame() {
+let playerScore;
+let computerScore;
+let roundCount;
+let playerSelection;
+let computerSelection;
+let element;
+let button;
+
+// outside named function that allows the event handler to be removed
+function clickHandler(element, button) {
+
+	containerGame = document.querySelector('.game-container');
+	playerSelection = button;
 	
+	document.querySelector(element).classList.toggle('selected'); // turn selected player weapon green
+	document.querySelector(element).classList.toggle('button');
+	playRound(playerSelection, );
+	if (playerScore === 5 || computerScore === 5 ) {
+		return; // ends script if game has ended
+	};
+	displayComputerChoice(computerSelection); // turn selected computer weapon red
+	const resetButton = createDivElement('reset-button', 'Next Round');
+	document.body.insertBefore(resetButton, containerGame.nextSibling);
+	resetButton.addEventListener('click', () => {
+		document.body.removeChild(resetButton);
+		resetRound(button);
+		activateListener('.btn-rock');
+		activateListener('.btn-paper');
+		activateListener('.btn-scissors');
+	});
+}; // clickHandler()
+
+function activateListener(element) {
+	if (element === '.btn-rock') {
+		document.querySelector(element).addEventListener('click', myRockListener);
+	}
+	else if (element === '.btn-paper') {
+		document.querySelector(element).addEventListener('click', myPaperListener);
+	}
+	else if (element === '.btn-scissors') {
+		document.querySelector(element).addEventListener('click', myScissorsListener);
+	}
+};
+
+function disableListener(element) {
+	if (element === '.btn-rock') {
+		document.querySelector(element).removeEventListener('click', myRockListener);
+	}
+	else if (element === '.btn-paper') {
+		document.querySelector(element).removeEventListener('click', myPaperListener);
+	}
+	else if (element === '.btn-scissors') {
+		document.querySelector(element).removeEventListener('click', myScissorsListener);
+	};
+};
+
+function startGame() { // UI for game play
+
+	playerScore = 0
+	computerScore = 0
+	roundCount = 1
+
 	const containerGame = createDivElement('game-container', '');
 	
 	const playerIcon = createDivElement('player-icon', 'PLAYER');
@@ -101,125 +159,286 @@ function startGame() {
 	const paperBtn = document.querySelector('.btn-paper');
 	const scissorsBtn = document.querySelector('.btn-scissors');
 
-	rockBtn.addEventListener('click', () => {
-		//change name of class to one with 'highlight' styling
-		//will need to have a function that tests for the id name of selected
-		//and removes it if so. maybe use toggle?
-		rockBtn.classList.toggle('selected');
-		rockBtn.classList.toggle('button');
-		playRound('rock', );
-		const resetButton = createDivElement('reset-button', 'RESET');
-		document.body.insertBefore(resetButton, containerGame.nextSibling);
-	});
+	rockBtn.addEventListener('click', myRockListener);
 
-	paperBtn.addEventListener('click', () => {
-		paperBtn.classList.toggle('selected');
-		playRound('paper', );
-		const resetButton = createDivElement('reset-button', 'RESET');
-		document.body.insertBefore(resetButton, containerGame.nextSibling);
-	});
+	paperBtn.addEventListener('click', myPaperListener);
 
-	scissorsBtn.addEventListener('click', () => {
-		scissorsBtn.classList.toggle('selected');
-		playRound('scissors', );
-		const resetButton = createDivElement('reset-button', 'RESET');
-		document.body.insertBefore(resetButton, containerGame.nextSibling);
-	});
-} // startGame()
+	scissorsBtn.addEventListener('click', myScissorsListener);
 
-function updateComputerScore(computerScore) {
+}; // startGame()
+
+function myRockListener() {
+
+	element = '.btn-rock';
+	button = 'rock';
 	
-	document.getElementsByClassName('.comp-score').replaceWith(createDivElement('comp-score', `${computerScore}`));
-}
+	clickHandler(element, button);
+	disableListener(element);
+	disableListener('.btn-paper');
+	disableListener('.btn-scissors');
+};
 
-function updatePlayerScore(playerScore) {
+function myPaperListener() {
 
-	document.getElementsByClassName('.play-score').replaceWith(createDivElement('play-score', `${playerScore}`));
-}
+	element = '.btn-paper';
+	button = 'paper';
+	
+	clickHandler(element, button);
+	disableListener(element);
+	disableListener('.btn-rock');
+	disableListener('.btn-scissors');
+};
 
-// highlights computer selection
-function displayComputerChoice(computerSelection) {
-/* change class name of selected button and change the styling for
-new class name */
+function myScissorsListener() {
 
-}
+	element = '.btn-scissors';
+	button = 'scissors';
+	
+	clickHandler(element, button);
+	disableListener(element);
+	disableListener('.btn-rock');
+	disableListener('.btn-paper');
+};
 
-// resets weapon selection buttons and starts a new round
-function startNewRound() {
-}
-/* from event listener onclick, it removes other buttons, plays a round
-with corresponding weapon choice, then creates a new div that say 'reset'
-and assigned a class. That class name then has an event listener added in 
-startNewRound() to update the round and score count then perform the reset 
-of weapons choices back on the screen, deletion of computer choice, and 
-reinitiates a new round. */
+function updateComputerScore() {
+	const compScore = document.querySelector('.comp-score');
+	compScore.textContent = `${computerScore}`;
+};
+
+function updatePlayerScore() {
+	const playScore = document.querySelector('.play-score');
+	playScore.textContent = `${playerScore}`;
+};
+
+function displayComputerChoice(computerSelection) { // function for changing styling of selected computer weapon
+	if (computerSelection === 'rock') {
+		const computerButton = document.querySelector('.comp-btn-rock');
+		computerButton.classList.toggle('comp-selected')
+		computerButton.classList.toggle('comp-button');
+	}
+	else if (computerSelection === 'paper') {
+		const computerButton = document.querySelector('.comp-btn-paper');
+		computerButton.classList.toggle('comp-selected');
+		computerButton.classList.toggle('comp-button');
+	}
+	else if (computerSelection === 'scissors') {
+		const computerButton = document.querySelector('.comp-btn-scissors');
+		computerButton.classList.toggle('comp-selected');
+		computerButton.classList.toggle('comp-button');
+	};
+}; // displayComputerChoice()
+
+function updateRoundCount() {
+	const currentRound = document.querySelector('.current-round');
+	currentRound.textContent = `Round: ${roundCount}`;
+};
+
+function updateMessageBar(result) { // displays string containing result of round
+	
+	const message = document.querySelector('.message');
+
+	if (result === 'win') {
+
+		message.textContent = 'You won this round. Keep it up!';
+	}
+	else if (result === 'lose') {
+
+		message.textContent = 'You lost this round. Try again!';
+	}
+	else if (result === 'tie') {
+
+		message.textContent = 'This round ended in a tie!'
+	};
+}; //updateMessageBar()
+
+function toggleWeaponButton(contestant) { // reverts buttons back to original styling
+	
+	const rockBtn = document.querySelector('.btn-rock');
+	const paperBtn = document.querySelector('.btn-paper');
+	const scissorsBtn = document.querySelector('.btn-scissors');
+	const compRockBtn = document.querySelector('.comp-btn-rock');
+	const compPaperBtn = document.querySelector('.comp-btn-paper');
+	const compScissorsBtn = document.querySelector('.comp-btn-scissors');
+
+	if (contestant === 'player') {
+		if (playerSelection === 'rock') {
+			rockBtn.classList.toggle('selected');
+			rockBtn.classList.toggle('button');
+		}
+		else if (playerSelection === 'paper') {
+			paperBtn.classList.toggle('selected');
+			paperBtn.classList.toggle('button');
+		}
+		else if (playerSelection === 'scissors') {
+			scissorsBtn.classList.toggle('selected');
+			scissorsBtn.classList.toggle('button');
+		}
+	}
+	else if (contestant === 'computer') {
+		if (computerSelection === 'rock') {
+			compRockBtn.classList.toggle('comp-selected');
+			compRockBtn.classList.toggle('comp-button');
+		}
+		else if (computerSelection === 'paper') {
+			compPaperBtn.classList.toggle('comp-selected');
+			compPaperBtn.classList.toggle('comp-button');
+		}
+		else if (computerSelection === 'scissors') {
+			compScissorsBtn.classList.toggle('comp-selected');
+			compScissorsBtn.classList.toggle('comp-button');
+		}
+	};
+}; // toggleWeaponButton()
+
+function resetRound(selection) { // effectively updates and resets the game board for next round
+
+	const message = document.querySelector('.message');
+
+	if (selection === 'rock') {
+		toggleWeaponButton('player');
+		toggleWeaponButton('computer');
+		roundCount++;
+		updateRoundCount();
+		message.textContent = '';
+	}
+	else if (selection === 'paper') {
+		toggleWeaponButton('player');
+		toggleWeaponButton('computer');
+		roundCount++;
+		updateRoundCount();
+		message.textContent = '';
+	}
+	else if (selection === 'scissors') {
+		toggleWeaponButton('player');
+		toggleWeaponButton('computer');
+		roundCount++;
+		updateRoundCount();
+		message.textContent = '';
+	};
+}; // resetRound()
+
+function displayWinner(winner) { // Winner announcement and new game prompt
+	
+	document.body.textContent = '';
+
+	const containerNewGame = createDivElement('start-popup', '');
+	containerNewGame.appendChild(createDivElement('prompt', 'Want to play again?'));
+
+	const containerButtons = createDivElement('container-buttons', '');
+	containerButtons.appendChild(createDivElement('button btn-green', 'Yes'));
+	containerButtons.appendChild(createDivElement('button btn-red', 'No'));
+	containerNewGame.appendChild(containerButtons);
+
+	document.body.appendChild(containerNewGame);
+
+	const btnGreen = document.querySelector('.btn-green');
+	btnGreen.addEventListener('click', () => {
+		document.body.removeChild(containerNewGame);
+		showRules();
+	});
+
+	const btnRed = document.querySelector('.btn-red');
+	btnRed.addEventListener('click', () => {
+		referToGithub();
+	});
+
+  if (winner === 'player') {
+
+		const winnerDisplay = createDivElement('winner-display', 'You beat the computer!');
+		const prompt = document.querySelector('.prompt');
+
+		containerNewGame.insertBefore(winnerDisplay, prompt);
+	}
+	else if (winner === 'computer') {
+		const winnerDisplay = createDivElement('winner-display', 'You got beat by the computer?!');
+		const prompt = document.querySelector('.prompt');
+
+		containerNewGame.insertBefore(winnerDisplay, prompt);
+	};
+}; // displayWinner()
+
 //GAME LOGIC
 
-// Computer random choice function
-function computerPlay() {
+function computerPlay() { // Computer random choice function
   const choices = ['rock', 'paper', 'scissors'];
-  let computerSelection = choices[Math.floor(Math.random() * choices.length)];
+  computerSelection = choices[Math.floor(Math.random() * choices.length)];
   return computerSelection;
-}
+};
 
-let playerScore = 0;
-let computerScore = 0;
-let roundCount = 1;
-
-//single round function
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) { // Single round function
+	
 	computerSelection = computerPlay();
+	let result = '';
+
   if (playerSelection ===  computerSelection) {
-    console.log('tie');
-}	else if (playerSelection === 'rock' && 
-						computerSelection === 'paper') {
-    console.log('lose');
-} else if (playerSelection === 'rock' && 
+    result = 'tie';
+	}	else if (playerSelection === 'rock' && 
+							computerSelection === 'paper') {
+    	result = 'lose';
+	} else if (playerSelection === 'rock' && 
 						computerSelection === 'scissors') {
-    console.log('win');
-} else if (playerSelection === 'paper' && 
+    	result = 'win';
+	} else if (playerSelection === 'paper' && 
 						computerSelection === 'rock') {
-    console.log('win');
-} else if (playerSelection === 'paper' && 
+    	result = 'win';
+	} else if (playerSelection === 'paper' && 
 						computerSelection === 'scissors') {
-    console.log('lose');
-} else if (playerSelection === 'scissors' && 
+    	result = 'lose';
+	} else if (playerSelection === 'scissors' && 
 						computerSelection === 'rock') {
-    console.log('lose');
-} else if (playerSelection === 'scissors' && 
+    	result = 'lose';
+	} else if (playerSelection === 'scissors' && 
 						computerSelection === 'paper') {
-  	console.log('win');
-}
-} // playRound()
+  		result = 'win';
+	};
+gameLoop(result); // run result through function that updates player or computer score
+}; // playRound()
 
-// 5 round game function
-function game() {
-		for (let i = 1; i <= 3; i++) {
-  	computerSelection = computerPlay();
-	  let result = playRound(playerSelection, computerSelection);
-  	  if (result == 'win') {
-	  	  playerScore++;
-	}   else if (result == 'lose') {
-  	    computerScore++;
-				updateComputerScore(computerScore)
-	} 	else if (result == 'tie') {
-	}		else {
-				('Invalid choice. Please choose either rock, paper, or scissors.')
-					i--;
+// test for winner and prompt new game
+function testForWinner(contestant, score) {
+	if (contestant === 'player') {
+		if (score === 5) {
+			displayWinner('player');
+		}
+		else {return;}
 	}
-} // for loop
-} // game()
+	else if (contestant === 'computer') {
+		if (score === 5) {
+			displayWinner('computer');
+		}
+		else {return;}
+	};
+}; // testForWinner()
 
-// Winner announcement function
-function displayWinner() {
-  if (playerScore > computerScore) {
-	  return 'You beat the computer!';
-} else if (computerScore > playerScore) {
-  	return 'You lost to the computer!';
-} else if (playerScore === computerScore) {
-    return 'It\'s a tie!'
-    }
-}
+function gameLoop(result) { // loop that updates score and tests for winner
+	gameLoop:
+	while(playerScore < 5 && computerScore < 5) {
 
+  	if (result === 'win') {
+	    playerScore++;
+			updatePlayerScore();
+			testForWinner('player', playerScore);
+			if (playerScore === 5) {
+				break gameLoop;
+			}
+			updateMessageBar('win');
+			break; // if no winner, breaks out of loop and continues clickHandler
+		}
+		else if (result === 'lose') {
+      computerScore++;
+			updateComputerScore();
+			testForWinner('computer', computerScore);
+			if (computerScore === 5) {
+				break gameLoop;
+			}
+			updateMessageBar('lose');
+			break; // if no winner, breaks out of loop and continues clickHandler
+		}
+		else if (result === 'tie') {
+			updateMessageBar('tie');
+			break;
+		};
+	};
+}; // gameLoop()
 
 wantToPlay();
